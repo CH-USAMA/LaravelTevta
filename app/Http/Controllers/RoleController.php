@@ -61,10 +61,15 @@ class RoleController extends Controller
 
     public function createPermissions()
     {
-        $permission = Permission::create(['name' => 'File Module']);
-        $permission = Permission::create(['name' => 'Data Module']);
-        $permission = Permission::create(['name' => 'Reports Module']);
-        $permission = Permission::create(['name' => 'Backup Module']);
+        // $permission = Permission::create(['name' => 'File Module']);
+        // $permission = Permission::create(['name' => 'Data Module']);
+        // $permission = Permission::create(['name' => 'Reports Module']);
+        // $permission = Permission::create(['name' => 'Backup Module']);
+
+        $permission = Permission::create(['name' => 'Enter Data']);
+        $permission = Permission::create(['name' => 'Edit List']);
+        $permission = Permission::create(['name' => 'Admittance Slip']);
+        $permission = Permission::create(['name' => 'Enter Attendance']);
 
 
 

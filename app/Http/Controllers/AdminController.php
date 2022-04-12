@@ -38,7 +38,7 @@ class AdminController extends Controller
     {
         $user = User::where('role','Board')->get();
       
-        return view('admin.userslist',compact('user'))->with('no', 1);
+        return view('admin.userlistboard',compact('user'))->with('no', 1);
     }
     
 
@@ -74,55 +74,66 @@ class AdminController extends Controller
             'role' => ['required', 'string', 'max:255'],
         ]);
         $user = User::find($request->id);
-
-        if($request->has('file_module'))
+        if($request->role != 'Institute')
         {
-            if($user->hasPermissionTo('File Module'))
-            {
-                $a = 1;
-            }else{
-                $user->givePermissionTo('File Module');
-            }
-        }else{
-            $user->revokePermissionTo('File Module');
+            $permissions = array('Enter Data','Edit List','Admittance Slip','Enter Attendance');
+            !empty($request->file_module) ? array_push($permissions,'File Module') : '';
+            !empty($request->data_module) ? array_push($permissions,'Data Module') : '';
+            !empty($request->report_module) ? array_push($permissions,'Reports Module') : '';
+            !empty($request->backup_module) ? array_push($permissions,'Backup Module') : '';
+            $user->syncRoles($request->role);
+            $user->syncPermissions($permissions);
         }
+       
+        // dd($permissions);
+        // if($request->has('file_module'))
+        // {
+        //     if($user->hasPermissionTo('File Module'))
+        //     {
+        //         $a = 1;
+        //     }else{
+        //         $user->givePermissionTo('File Module');
+        //     }
+        // }else{
+        //     $user->revokePermissionTo('File Module');
+        // }
 
-        if($request->has('data_module'))
-        {
-            if($user->hasPermissionTo('Data Module'))
-            {
-                $a = 1;
-            }else{
-                $user->givePermissionTo('Data Module');
-            }
-        }else{
-            $user->revokePermissionTo('Data Module');
+        // if($request->has('data_module'))
+        // {
+        //     if($user->hasPermissionTo('Data Module'))
+        //     {
+        //         $a = 1;
+        //     }else{
+        //         $user->givePermissionTo('Data Module');
+        //     }
+        // }else{
+        //     $user->revokePermissionTo('Data Module');
 
-        }
-        if($request->has('report_module'))
-        {
-            if($user->hasPermissionTo('Reports Module'))
-            {
-                $a = 1;
-            }else{
-                $user->givePermissionTo('Reports Module');
-            }
-        }else{
-            $user->revokePermissionTo('Reports Module');
+        // }
+        // if($request->has('report_module'))
+        // {
+        //     if($user->hasPermissionTo('Reports Module'))
+        //     {
+        //         $a = 1;
+        //     }else{
+        //         $user->givePermissionTo('Reports Module');
+        //     }
+        // }else{
+        //     $user->revokePermissionTo('Reports Module');
 
-        }
-        if($request->has('backup_module'))
-        {
-            if($user->hasPermissionTo('Backup Module'))
-            {
-                $a = 1;
-            }else{
-                $user->givePermissionTo('Backup Module');
-            }
-        }else{
-            $user->revokePermissionTo('Backup Module');
+        // }
+        // if($request->has('backup_module'))
+        // {
+        //     if($user->hasPermissionTo('Backup Module'))
+        //     {
+        //         $a = 1;
+        //     }else{
+        //         $user->givePermissionTo('Backup Module');
+        //     }
+        // }else{
+        //     $user->revokePermissionTo('Backup Module');
 
-        }
+        // }
         $request->status = isset($request->status) ? 'active' : 'inactive';
 
         User::where('id',$request->id)->update(
@@ -137,7 +148,11 @@ class AdminController extends Controller
         );
         Session::flash('message','Settings Updated Successfully!'); 
         Session::flash('alert-class', 'alert-success'); 
-        return redirect()->back();
+        if($request->role == 'Board')
+        {
+            return redirect()->route('userslistboard');
+        }
+        return redirect()->route('userslist');
         dd($request->all());
     }
 
@@ -173,6 +188,10 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+    public function controlpanel()
+    {
+        return view('admin.controlpanel');
     }
     public function changePassword()
     {

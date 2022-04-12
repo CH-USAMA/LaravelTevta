@@ -114,18 +114,23 @@
               <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
             </svg> Administration</a>
           <ul class="nav-group-items">
+          @hasexactroles('Administrator')
             <li class="nav-item"><a class="nav-link" href="{{ route('getAllRoles') }}"><span class="nav-icon"></span> User Types</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('userslist') }}"><span class="nav-icon"></span> Users</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('userslistboard') }}"><span class="nav-icon"></span> Grant Permission to User</a></li>
+            @endhasexactroles
             <li class="nav-item"><a class="nav-link" href="{{ route('changePassword') }}"><span class="nav-icon"></span> Change Password</a></li>
+           @hasexactroles('Administrator')
             <li class="nav-item"><a class="nav-link" href="{{ route('initializePassword') }}"><span class="nav-icon"></span> Initialize Password</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Control Panel</a></li>
+            @endhasexactroles
+
+            <li class="nav-item"><a class="nav-link" href="{{ route('controlpanel')}}"><span class="nav-icon"></span> Control Panel</a></li>
           </ul>
         </li>
 
 
       <!-- Set Access -->
-      
+      @hasanyrole('Board|Administrator')
       <li class="nav-title">Set Access</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="{{ asset('#') }}">
             <svg class="nav-icon">
@@ -133,17 +138,17 @@
             </svg> Set Access</a>
           <ul class="nav-group-items">
             <li class="nav-item"><a class="nav-link" href="{{ route('punjabAccess') }}"><span class="nav-icon"></span> Set Access Punjab Level</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Set Access Institute Level</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Set Session Access</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('InstitueLevelAccess')}}"><span class="nav-icon"></span> Set Access Institute Level</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{route('setsessionlist') }}"><span class="nav-icon"></span> Set Session Access</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Set Colleges Login Status</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Set Auto Attendance</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Enter Strength</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('sessionAccess') }}"><span class="nav-icon"></span> Set Auto Attendance</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('strengthSessionWise') }}"><span class="nav-icon"></span> Enter Strength</a></li>
 
           </ul>
         </li>
-
+        @endhasanyrole
       <!-- File Maintenance -->
-
+      @hasanyrole('Board|Administrator')
       @can('File Module')
       <li class="nav-title">File Maintenance</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="{{ asset('#') }}">
@@ -151,15 +156,15 @@
               <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-file') }}"></use>
             </svg> File Maintenance</a>
           <ul class="nav-group-items">
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/accordion.html') }}"><span class="nav-icon"></span> Group/Shift Codes</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Centre Group</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Centre Codes</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Qualification Codes</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Trade Codes</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Exam Title</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Create Master/Year File</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/accordion.html') }}"><span class="nav-icon"></span> Create Session File</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Edit Session Dates</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('groupshiftlist') }}"><span class="nav-icon"></span> Group/Shift Codes</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Centre Group</a></li> -->
+            <li class="nav-item"><a class="nav-link" href="{{ route('centrecodelist') }}"><span class="nav-icon"></span> Centre Codes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('qualcodelist') }}"><span class="nav-icon"></span> Qualification Codes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('tradelist') }}"><span class="nav-icon"></span> Trade Codes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('examtitlelist') }}"><span class="nav-icon"></span> Exam Title</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('masterfile') }}"><span class="nav-icon"></span> Create Master/Year File</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('newSession') }}"><span class="nav-icon"></span> Create Session File</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('sessionlist') }}"><span class="nav-icon"></span> Edit Session Dates</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Close Session</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Set Age Limit</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Set Registration No.</a></li>
@@ -168,26 +173,44 @@
           </ul>
         </li>
       @endcan
+      @endhasanyrole
+
         <!-- Data Processing -->
-        @can('Data Module')
+      @can('Data Module')
         <li class="nav-title">Data Processing</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="{{ asset('#') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-bell') }}"></use>
             </svg> Data Processing</a>
           <ul class="nav-group-items">
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/accordion.html') }}"><span class="nav-icon"></span> Students Information</a></li>
+    
+            @can('Edit List')
+            <li class="nav-item"><a class="nav-link" href="{{ route('studentinformation') }}"><span class="nav-icon"></span> Students Information</a></li>
+            @endcan
+            @can('Enter Data')
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Submit Students Info </a></li>
+            @endcan
+  
+    
+            @hasanyrole('Board|Administrator')
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Import Data to Session File</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Rejected/Duplicate Students Info</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Generate Registration Numbers </a></li>
+           @endhasanyrole
+
+            @can('Enter Attendance')
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Enter Students Attendance</a></li>
+            @endcan
+            @can('Enter Data')
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Enter Students Result</a></li>
+            @endcan
+
           </ul>
         </li>
         @endcan
 
         <!-- Reports  -->
+        @hasanyrole('Board|Administrator')
         @can('Reports Module')
         <li class="nav-title">Reports</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="{{ asset('#') }}">
@@ -214,7 +237,10 @@
           </ul>
         </li>
       @endcan
+      @endhasanyrole
+
       <!-- Backup -->
+      @hasanyrole('Board|Administrator')
       @can('Backup Module')
       <li class="nav-title">Backup</li>
 
@@ -228,6 +254,8 @@
           </ul>
         </li>
         @endcan
+      @endhasanyrole
+
       </ul>
       <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
     </div>

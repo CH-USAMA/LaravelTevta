@@ -58,7 +58,7 @@
                     <td>{{ $user->role}}</td>
                     <!-- <td><input type="checkbox" class="changeStatus" name="checkbox" value="{{$user->id}}" /></td> -->
                     <td> <input data-id="{{$user->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
-                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status ? 'checked' : '' }}></td>
+                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status == 'active' ? 'checked' : '' }}></td>
                     
 
                   </tr>
@@ -90,9 +90,8 @@
 
 
 
-$(function() {
-    $('.changeStatus').change(function() {
-        var status = $(this).prop('checked') == true ? 1 : 0; 
+  $("#example").on("click", ".changeStatus", function(){
+        var status = $(this).prop('checked') == true ? 'active' : 'inactive'; 
         var user_id = $(this).data('id'); 
          
         $.ajax({
@@ -106,6 +105,5 @@ $(function() {
             }
         });
     })
-  })
 @endsection
 

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Grant Permission to User')
+@section('title', 'Users List')
 @section('content')
 <div class="header-divider"></div>
 <div class="container-fluid">
@@ -8,7 +8,7 @@
       <li class="breadcrumb-item">
         <!-- if breadcrumb is single--><span>Home</span>
       </li>
-      <li class="breadcrumb-item active"><span>Grant Permission to User</span></li>
+      <li class="breadcrumb-item active"><span>User</span></li>
     </ol>
   </nav>
 </div>
@@ -58,7 +58,7 @@
                     <td>{{ $user->role}}</td>
                     <!-- <td><input type="checkbox" class="changeStatus" name="checkbox" value="{{$user->id}}" /></td> -->
                     <td> <input data-id="{{$user->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
-                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status == 'active' ? 'checked' : '' }}></td>
+                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status ? 'checked' : '' }}></td>
                     
 
                   </tr>
@@ -90,8 +90,9 @@
 
 
 
-  $("#example").on("click", ".changeStatus", function(){
-        var status = $(this).prop('checked') == true ? 'active' : 'inactive'; 
+$(function() {
+    $('.changeStatus').change(function() {
+        var status = $(this).prop('checked') == true ? active : inactive; 
         var user_id = $(this).data('id'); 
          
         $.ajax({
@@ -105,5 +106,6 @@
             }
         });
     })
+  })
 @endsection
 

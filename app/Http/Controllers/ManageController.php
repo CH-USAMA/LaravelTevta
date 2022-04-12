@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\User;
+use App\Models\SessionHistory;
+use App\Models\Centres;
+
+
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -71,15 +75,34 @@ return redirect()->route('your route name')->with('info','This is xyz informatio
         $user->status = $request->status;
         $user->save();
   
-        return response()->json(['success'=>'Status change successfully.']);
+        return response()->json(['success'=>'Status changed successfully.']);
     }
 
+    public function changeStatusSession(Request $request)
+    {
+        // dd($request);
+        $session = SessionHistory::find($request->session_id);
+        $session->s_status = $request->status;
+        $session->save();
+  
+        return response()->json(['success'=>'Status changed successfully.']);
+    }
+
+    public function changeStatusCentre(Request $request)
+    {
+        $Centre = Centres::find($request->centre_id);
+        $Centre->centreStatus = $request->status;
+        $Centre->save();
+  
+        return response()->json(['success'=>'Status changed successfully.']);
+    }
+    
     public function changeStatusRole(Request $request)
     {
         $user = Role::find($request->role_id);
         $user->status = $request->status;
         $user->save();
   
-        return response()->json(['success'=>'Status change successfully.']);
+        return response()->json(['success'=>'Status changed successfully.']);
     }
 }

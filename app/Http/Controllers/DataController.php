@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class DataController extends Controller
 {
@@ -29,6 +30,24 @@ class DataController extends Controller
     public function enterStudentDetails()
     {
         return view('Data_module.enterStudentDetail');
+
+    }
+
+    public function studentinformation()
+    {
+        return view('Data_module.studentsInformation');
+
+    }
+
+    public function sessionStudentList(Request $request)
+    {
+        $session = $request->session;
+        $query = "Select * from ses".$session;
+        $students = DB::select($query);
+        // dd($result);
+
+
+        return view('Data_module.sessionStudentList',compact('students'))->with('no', 1);
 
     }
     

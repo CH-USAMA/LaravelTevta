@@ -101,7 +101,7 @@
           <label class="form-check-label" for="status">Active/InActive</label>
         </div>
       </div>
-      
+      @if($user->role != 'Institute')
       <p> <u> <strong> Permission to User </strong></u></p>
 
       <div class="col-md-12">
@@ -122,10 +122,13 @@
           <input {{ ( $user->can('Backup Module'))  ? 'checked' : '' }} class="form-check-input" id="status" type="checkbox" name="backup_module" value="active">
         </div>
       </div>
-   
+      @endif
       <div class="col-12">
-        <button class="btn btn-primary" type="submit">OK</button>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <!-- <a href="{{route('userslist')}}" class="btn btn-secondary" type="submit">Back</a> -->
+
       </div>
+     
     </form>
         
     </div>

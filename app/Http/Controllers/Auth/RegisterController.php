@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -74,8 +76,9 @@ class RegisterController extends Controller
     {
         $data['status'] = isset($data['status']) ? 'active' : 'inactive';
         $data['password'] = "123123123";
+        $role = $data['role'];
         // dd($data);
-        return User::create([
+        $user = User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
@@ -85,5 +88,24 @@ class RegisterController extends Controller
             'phonenumber' => $data['phone'],
             'status' => $data['status'],
         ]);
+        $user->assignRole($role);
+        if($role != 'Institute')
+        {  
+            $user->syncPermissions(Permission:all());
+        }else{
+            $permissions = array('Enter Data','Edit List','Admittance Slip','Enter Attendance','Data Module');
+            $user->syncPermissions($permissions);
+        }
+        
+        return $user;
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        return $this->registered($request, $user)
+           // ?: redirect($this->redirectPath());
+          ?: redirect()->route('userslist')->with('success', 'You are successfully Registered!');
     }
 }

@@ -1,14 +1,14 @@
 @extends('layouts.main')
-@section('title', 'Grant Permission to User')
+@section('title', 'Session')
 @section('content')
 <div class="header-divider"></div>
 <div class="container-fluid">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb my-0 ms-2">
       <li class="breadcrumb-item">
-        <!-- if breadcrumb is single--><span>Home</span>
+        <!-- if breadcrumb is single--><span>File Maintenance</span>
       </li>
-      <li class="breadcrumb-item active"><span>Grant Permission to User</span></li>
+      <li class="breadcrumb-item active"><span>Sessions</span></li>
     </ol>
   </nav>
 </div>
@@ -24,7 +24,7 @@
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
             <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Users <a href="{{ route('register') }}" class="btn btn-secondary" style="float:right;">Add User</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <div class="card-header">List of Sessions <a href="{{ route('newSession') }}" class="btn btn-secondary" style="float:right;">Add Session</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
 
             <div class="card-body">
 
@@ -33,32 +33,31 @@
                   <tr>
                   <th></th>
                     <th>Nr</th>
-                    <th>User ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>E-mail</th>
-                    <th>Telephone</th>
-                    <th>User Type</th>
+                    <th>Session Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>Action</th>
+
 
                   </tr>
                 </thead>
                 <tbody>
 
-                  @foreach($user as $user)
+                  @foreach($sessions as $session)
                   
                   <tr>
-                    <td><input type="checkbox" name="delete[]"  value="{{ $user->id}}" /></td>
+                    <td><input type="checkbox" name="delete[]"  value="{{ $session->id}}" /></td>
                     <td>{{ $no++ }}</td>
-                    <td><a href="{{ route('editUser',['id' => Crypt::encrypt($user->id)])}}">{{ $user->username}}</a></td>
-                    <td>{{ $user->firstname}}</td>
-                    <td>{{ $user->lastname}}</td>
-                    <td>{{ $user->email}}</td>
-                    <td>{{ $user->phonenumber}}</td>
-                    <td>{{ $user->role}}</td>
-                    <!-- <td><input type="checkbox" class="changeStatus" name="checkbox" value="{{$user->id}}" /></td> -->
-                    <td> <input data-id="{{$user->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
-                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status == 'active' ? 'checked' : '' }}></td>
+                    <td><a href="{{ route('editSession',['id' => Crypt::encrypt($session->id)])}}">{{ $session->s_name}}</a></td>
+                    <td>{{ $session->s_start_date}}</td>
+                    <td>{{ $session->s_end_date}}</td>
+
+                   
+
+                    <td> <input data-id="{{$session->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
+                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $session->s_status ? 'checked' : '' }}></td>
+
+                
                     
 
                   </tr>
@@ -81,17 +80,11 @@
 
   $(document).ready(function() {
       $('#example').DataTable({
-        "scrollX": true
       });
   } );
-
-
-
-
-
-
-  $("#example").on("click", ".changeStatus", function(){
-        var status = $(this).prop('checked') == true ? 'active' : 'inactive'; 
+  $(function() {
+    $('.changeStatus').change(function() {
+        var status = $(this).prop('checked') == true ? active : inactive; 
         var user_id = $(this).data('id'); 
          
         $.ajax({
@@ -105,5 +98,6 @@
             }
         });
     })
+  })
 @endsection
 

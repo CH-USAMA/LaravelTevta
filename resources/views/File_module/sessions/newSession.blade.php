@@ -26,7 +26,7 @@
               <!-- content here -->
               <div class="body flex-grow-1 px-3">
                 <div class="container-lg">
-                <form class="row g-3" method="POST" action="{{ route('addRole')}}">
+                <form class="row g-3" method="POST" action="{{ route('addSession')}}">
                     @csrf
                     <div class="col-md-6">
                         <label class="form-label" for="session_code">Enter New Session</label>
@@ -38,7 +38,7 @@
                         </span>
                     @enderror
 
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <label class="form-label" for="age_limit">Age Limit</label>
                         <input class="form-control @error('age_limit') is-invalid @enderror" id="age_limit" type="input" name="age_limit">
                     </div>
@@ -46,7 +46,7 @@
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                    @enderror -->
 
                     <div class="col-md-6">
                         <label class="form-label" for="start_date">Start Date</label>
@@ -70,7 +70,7 @@
 
                    
 
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <label class="form-label" for="exam_title">Exam Title</label>
                         <input class="form-control @error('exam_title') is-invalid @enderror" id="exam_title" type="input" name="exam_title">
                     </div>
@@ -78,7 +78,8 @@
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                    @enderror -->
+
                     <div class="col-12">
                         <button class="btn btn-primary" type="submit">Add Session</button>
                     </div>
