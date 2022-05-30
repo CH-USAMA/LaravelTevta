@@ -24,7 +24,7 @@
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
             <input type="hidden" name="table" value="centres">
-            <div class="card-header">List of Centres <a href="{{ route('addcentrecode') }}" class="btn btn-secondary" style="float:right;">Add Centre Code</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Remove Selected Centre</button></div>
+            <div class="card-header">List of Centres <a href="{{ route('addcentrecode') }}" class="btn btn-secondary" style="float:right;">Add Centre Code</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Remove Selected Centre</button><br><br></div>
 
             <div class="card-body">
 

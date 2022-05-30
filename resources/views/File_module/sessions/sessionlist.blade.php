@@ -24,21 +24,17 @@
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
             <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Sessions <a href="{{ route('newSession') }}" class="btn btn-secondary" style="float:right;">Add Session</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <div class="card-header">List of Sessions <a href="{{ route('newSession') }}" class="btn btn-secondary" style="float:right;">Add Session</a><br><br></div>
 
             <div class="card-body">
 
             <table id="example" class="table striped" >
                 <thead>
                   <tr>
-                  <th></th>
                     <th>Nr</th>
                     <th>Session Name</th>
                     <th>Start Date</th>
                     <th>End Date</th>
-                    <th>Action</th>
-
-
                   </tr>
                 </thead>
                 <tbody>
@@ -46,20 +42,10 @@
                   @foreach($sessions as $session)
                   
                   <tr>
-                    <td><input type="checkbox" name="delete[]"  value="{{ $session->id}}" /></td>
                     <td>{{ $no++ }}</td>
                     <td><a href="{{ route('editSession',['id' => Crypt::encrypt($session->id)])}}">{{ $session->s_name}}</a></td>
                     <td>{{ $session->s_start_date}}</td>
                     <td>{{ $session->s_end_date}}</td>
-
-                   
-
-                    <td> <input data-id="{{$session->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
-                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $session->s_status ? 'checked' : '' }}></td>
-
-                
-                    
-
                   </tr>
                   </form>
                   @endforeach
@@ -82,22 +68,6 @@
       $('#example').DataTable({
       });
   } );
-  $(function() {
-    $('.changeStatus').change(function() {
-        var status = $(this).prop('checked') == true ? active : inactive; 
-        var user_id = $(this).data('id'); 
-         
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: '/changeStatusUser',
-            data: {'status': status, 'user_id': user_id},
-            success: function(data){
-              console.log(data.success)
-              toastr.info("Status changed Successfully");
-            }
-        });
-    })
-  })
+
 @endsection
 

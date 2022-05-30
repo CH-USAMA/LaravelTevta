@@ -24,7 +24,7 @@
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
             <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Users <a href="{{ route('register') }}" class="btn btn-secondary" style="float:right;">Add User</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <div class="card-header">List of Users <a href="{{ route('register') }}" class="btn btn-secondary" style="float:right;">Add User</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button><br><br></div>
 
             <div class="card-body">
 

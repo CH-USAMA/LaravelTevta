@@ -67,7 +67,7 @@
   <body>
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
       <div class="sidebar-brand d-none d-md-flex">
-        <h3>TEVTA</h3>
+        <h3>Trade Testing Board</h3>
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
         <li class="nav-item"><a class="nav-link" href="{{ asset('index.html') }}">
@@ -140,8 +140,8 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('punjabAccess') }}"><span class="nav-icon"></span> Set Access Punjab Level</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('InstitueLevelAccess')}}"><span class="nav-icon"></span> Set Access Institute Level</a></li>
             <li class="nav-item"><a class="nav-link" href="{{route('setsessionlist') }}"><span class="nav-icon"></span> Set Session Access</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Set Colleges Login Status</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('sessionAccess') }}"><span class="nav-icon"></span> Set Auto Attendance</a></li>
+           <!--  <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> Set Colleges Login Status</a></li> -->
+            <li class="nav-item"><a class="nav-link" href="{{ route('setattendance') }}"><span class="nav-icon"></span> Set Auto Attendance</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('strengthSessionWise') }}"><span class="nav-icon"></span> Enter Strength</a></li>
 
           </ul>
@@ -165,10 +165,10 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('masterfile') }}"><span class="nav-icon"></span> Create Master/Year File</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('newSession') }}"><span class="nav-icon"></span> Create Session File</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('sessionlist') }}"><span class="nav-icon"></span> Edit Session Dates</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Close Session</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Set Age Limit</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Set Registration No.</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Set Central Trades</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('closeSession')}}"><span class="nav-icon"></span> Close Session</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('setagelimit') }}"><span class="nav-icon"></span> Set Age Limit</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> Set Registration No.</a></li> -->
+           <!--  <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Set Central Trades</a></li> -->
 
           </ul>
         </li>
@@ -188,21 +188,22 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('studentinformation') }}"><span class="nav-icon"></span> Students Information</a></li>
             @endcan
             @can('Enter Data')
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Submit Students Info </a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('submitStudentData') }}"><span class="nav-icon"></span> Submit Students Info </a></li>
             @endcan
   
     
             @hasanyrole('Board|Administrator')
+             <li class="nav-item"><a class="nav-link" href="{{ route('sessioninformation')}}"><span class="nav-icon"></span> All Student List</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Import Data to Session File</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Rejected/Duplicate Students Info</a></li>
+           
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Generate Registration Numbers </a></li>
            @endhasanyrole
 
             @can('Enter Attendance')
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Enter Students Attendance</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('studentAttendence') }}"><span class="nav-icon"></span> Enter Students Attendance</a></li>
             @endcan
             @can('Enter Data')
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Enter Students Result</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('enterStudentResult') }}"><span class="nav-icon"></span> Enter Students Result</a></li>
             @endcan
 
           </ul>
@@ -218,20 +219,20 @@
               <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-notes') }}"></use>
             </svg> Reports</a>
           <ul class="nav-group-items">
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/accordion.html') }}"><span class="nav-icon"></span> Editing Data List</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> Admittance Slip</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Attendance Sheet</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Award List</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Result Statement</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Centre/Tradewise Summary</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Print Certificates</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('editingDataForm') }}"><span class="nav-icon"></span> Editing Data List</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admitanceSlipForm') }}"><span class="nav-icon"></span> Admittance Slip</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('attendenceSheetForm') }}"><span class="nav-icon"></span> Attendance Sheet</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('awardListForm') }}"><span class="nav-icon"></span> Award List</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('resultStatementForm') }}"><span class="nav-icon"></span> Result Statement</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('centerSummaryForm') }}"><span class="nav-icon"></span> Centre/Tradewise Summary</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('printCertificateForm') }}"><span class="nav-icon"></span> Print Certificates</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/accordion.html') }}"><span class="nav-icon"></span> Rejected Student's List</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/breadcrumb.html') }}"><span class="nav-icon"></span> List of Non Eligible Students</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/cards.html') }}"><span class="nav-icon"></span> Strength Summary</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/carousel.html') }}"><span class="nav-icon"></span> Session History Statistical Report</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('sessionHistoryReport')}}"><span class="nav-icon"></span> Session History Statistical Report</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/collapse.html') }}"><span class="nav-icon"></span> Periodic Report</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Registration Alloted Report</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ asset('base/list-group.html') }}"><span class="nav-icon"></span> Pictures List of Students</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('sceAttendenceSheet') }}"><span class="nav-icon"></span> Pictures List of Students</a></li>
 
 
           </ul>

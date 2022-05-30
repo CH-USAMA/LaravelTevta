@@ -24,7 +24,7 @@
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
             <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Institutes <a href="{{ route('register') }}" class="btn btn-secondary" style="float:right;">Add User</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <div class="card-header">List of Institutes <a href="{{ route('register') }}" class="btn btn-secondary" style="float:right;">Add User</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button><br><br></div>
 
             <div class="card-body">
 
@@ -61,7 +61,7 @@
                     <td>{{ $user->role}}</td>
                     <td>{{date('Y-m-d', strtotime($user->from_date)) }}</td>
                     <td>{{date('Y-m-d', strtotime($user->to_date)) }}</td>
-                    <td>Session</td>
+                    <td>{{ $user->session ?? 'N/A'}}</td>
                     <td><a href="{{ route('InstitueLevelAccessEdit',['id' => Crypt::encrypt($user->id)])}}">Set Access</a></td>
 
                     <!-- <td><input type="checkbox" class="changeStatus" name="checkbox" value="{{$user->id}}" /></td> -->

@@ -23,8 +23,8 @@
           <div class="card mb-4">
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
-            <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Qualification Codes <a href="{{ route('addqualcode') }}" class="btn btn-secondary" style="float:right;">Add Qualification Code</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <input type="hidden" name="table" value="qual">
+            <div class="card-header">List of Qualification Codes <a href="{{ route('addqualcode') }}" class="btn btn-secondary" style="float:right;">Add Qualification Code</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button><br><br></div>
 
             <div class="card-body">
 
@@ -51,7 +51,7 @@
                    
 
                     <td> <input data-id="{{$qualcode->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
-                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $qualcode->qualStatus ? 'checked' : '' }}></td>
+                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $qualcode->qualStatus == 'A' ? 'checked' : '' }}></td>
 
                 
                     
@@ -80,13 +80,13 @@
   } );
   $(function() {
     $('.changeStatus').change(function() {
-        var status = $(this).prop('checked') == true ? active : inactive; 
+        var status = $(this).prop('checked') == true ? 'A' : 'D'; 
         var user_id = $(this).data('id'); 
          
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: '/changeStatusUser',
+            url: '/changeStatusQual',
             data: {'status': status, 'user_id': user_id},
             success: function(data){
               console.log(data.success)

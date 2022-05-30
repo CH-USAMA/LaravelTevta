@@ -9,5 +9,11 @@ class QualCodes extends Model
 {
     use HasFactory;
     protected $table = 'qual';
+    protected $fillable = [
+        'qualCode',
+        'qualName',
+        'qualStatus',
+        'userID',
+    ];
 
 }

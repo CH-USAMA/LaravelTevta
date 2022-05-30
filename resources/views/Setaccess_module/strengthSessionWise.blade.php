@@ -32,18 +32,18 @@
         <label class="form-label" for="session">Enter Session</label>
         <input name="session" class="form-control @error('session') is-invalid @enderror" value="{{ $user->session ?? old('session') }}" required autocomplete="session" autofocus  id="session" type="input">
       </div>
-    </div>
 
     <div class="col-md-6">
         <label class="form-label" for="session">Select Limit (A for All or 1-59)</label>
         <input name="session" class="form-control @error('session') is-invalid @enderror" value="{{ $user->session ?? old('session') }}" required autocomplete="session" autofocus  id="session" type="input">
       </div>
-    </div>
        
-        <div class="col-12">
+        
+            </div>
+
+            <div class="col-12">
             <button class="btn btn-primary" type="submit">OK</button>
         </div>
-            </div>
         </div>
     </div>
 

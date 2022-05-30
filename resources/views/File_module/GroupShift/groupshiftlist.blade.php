@@ -24,7 +24,7 @@
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
             <input type="hidden" name="table" value="groupp">
-            <div class="card-header">List of Group Shift <a href="{{ route('addgroupshift') }}" class="btn btn-secondary" style="float:right;">Add Group Shift</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Remove Selected</button></div>
+            <div class="card-header">List of Group Shift <a href="{{ route('addgroupshift') }}" class="btn btn-secondary" style="float:right;">Add Group Shift</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Remove Selected</button><br><br></div>
 
             <div class="card-body">
 

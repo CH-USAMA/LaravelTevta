@@ -8,7 +8,11 @@
       <li class="breadcrumb-item">
         <!-- if breadcrumb is single--><span>File Maintenance</span>
       </li>
+      @isset($centrecode)
+      <li class="breadcrumb-item active"><span>Update Centre Code</span></li>
+      @else
       <li class="breadcrumb-item active"><span>Add Centre Code</span></li>
+      @endisset
     </ol>
   </nav>
 </div>
@@ -21,16 +25,29 @@
     <div class="body flex-grow-1 px-3">
         <div class="container-lg">
           <div class="card mb-4">
-            <div class="card-header">Add Centre Code</div>
+             
+              @isset($centrecode)
+              <div class="card-header">Update Centre Code</div>
+              @else
+              <div class="card-header">Add Centre Code</div>
+              @endisset
+            
             <div class="card-body">
               <!-- content here -->
               <div class="body flex-grow-1 px-3">
                 <div class="container-lg">
+                @isset($centrecode)
+                <form class="row g-3" method="POST" action="{{ route('updatecentrecode')}}">
+              @else
                 <form class="row g-3" method="POST" action="{{ route('savecentrecode')}}">
+              @endisset
+               
                     @csrf
+                    <input type="hidden" name="id" value="{{ $centrecode->id ?? '' }}">
+
                     <div class="col-md-6">
                         <label class="form-label" for="centrecode">Centre Code</label>
-                        <input value="{{ $centrecode->centrecode ?? old('centrecode') }}" class="form-control @error('centrecode') is-invalid @enderror" id="centrecode" type="text" name="centrecode">
+                        <input {{  isset($centrecode) ? 'disabled' : '' }} value="{{ $centrecode->centreCode ?? old('centrecode') }}" class="form-control @error('centrecode') is-invalid @enderror" id="centrecode" type="text" name="centrecode">
                         @error('centrecode')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
@@ -52,7 +69,7 @@
 
                     <div class="col-md-6">
                         <label class="form-label" for="disttName">District Name</label>
-                        <input value="{{ $centrecode->disttName ?? old('disttName') }}" class="form-control @error('disttName') is-invalid @enderror" id="disttName" type="input" name="disttName">
+                        <input value="{{ $centrecode->centreDisttName ?? old('disttName') }}" class="form-control @error('disttName') is-invalid @enderror" id="disttName" type="input" name="disttName">
                         @error('disttName')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
@@ -106,7 +123,7 @@
                    
                     <div class="col-md-6">
                         <label class="form-label" for="CentreEmail">Email Address</label>
-                        <input value="{{ $centrecode->CentreEmail ?? old('CentreEmail') }}" class="form-control @error('CentreEmail') is-invalid @enderror" id="CentreEmail" type="input" name="CentreEmail">
+                        <input value="{{ $centrecode->centreEmail ?? old('CentreEmail') }}" class="form-control @error('CentreEmail') is-invalid @enderror" id="CentreEmail" type="email" name="CentreEmail">
                         @error('CentreEmail')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
@@ -116,14 +133,19 @@
                    
                     <div class="col-md-6">
                         <div class="form-check">
-                        <input   class="form-check-input" id="status" type="checkbox" name="status" value="active">
+                        <input  {{ ( isset($centrecode) && $centrecode->centreStatus == 'A') ? 'checked' : '' }} class="form-check-input" id="status" type="checkbox" name="status" value="A">
                         <label class="form-check-label" for="status">Active/InActive</label>
                         </div>
                     </div>
 
              
                        <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Add Centre Codes</button>
+                       @isset($centrecode)
+                       <button class="btn btn-primary" type="submit">Update Centre Codes</button>
+                       @else
+                       <button class="btn btn-primary" type="submit">Add Centre Codes</button>
+                       @endisset
+                        
                     </div>
                     </form>
                 </div>

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -42,7 +44,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -75,7 +77,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $data['status'] = isset($data['status']) ? 'active' : 'inactive';
-        $data['password'] = "123123123";
+        // $data['password'] = "123123123";
         $role = $data['role'];
         // dd($data);
         $user = User::create([
@@ -91,7 +93,7 @@ class RegisterController extends Controller
         $user->assignRole($role);
         if($role != 'Institute')
         {  
-            $user->syncPermissions(Permission:all());
+            $user->syncPermissions(Permission::all());
         }else{
             $permissions = array('Enter Data','Edit List','Admittance Slip','Enter Attendance','Data Module');
             $user->syncPermissions($permissions);

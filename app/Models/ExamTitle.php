@@ -10,4 +10,14 @@ class ExamTitle extends Model
     use HasFactory;
 
     protected $table = 'examtitle';
+
+    protected $fillable = [
+        'titleName',
+        'exThMks',
+        'exPrMks',
+        'exThPass',
+        'exPrPass',
+        'exDur',
+        'userID'
+    ];
 }

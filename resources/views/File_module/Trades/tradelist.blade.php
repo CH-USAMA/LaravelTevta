@@ -23,8 +23,8 @@
           <div class="card mb-4">
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
-            <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Trades <a href="{{ route('addexamtitle') }}" class="btn btn-secondary" style="float:right;">Add Exam Title</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <input type="hidden" name="table" value="trades">
+            <div class="card-header">List of Trades <a href="{{ route('addtrade') }}" class="btn btn-secondary" style="float:right;">Add Trade</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Remove Selected Trade</button><br><br></div>
 
             <div class="card-body">
 
@@ -36,10 +36,12 @@
                     <th>Trade Code</th>
                     <th>Trade Name</th>
                     <th>Theory Marks</th>
-                    <th>Practicle Marks</th>
+                    <th>Practical Marks</th>
                     <th>Theory Passing Marks</th>
-                    <th>Practicle Passing Marks</th>
+                    <th>Practical Passing Marks</th>
                     <th>Duration</th>
+                    <th>Action</th>
+
 
                   </tr>
                 </thead>
@@ -59,7 +61,7 @@
                     <td>{{ $trade->tradeDur}}</td>
 
                     <td> <input data-id="{{$trade->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
-                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $trade->tradeStatus ? 'checked' : '' }}></td>
+                     data-toggle="toggle" data-on="Active" data-off="InActive" {{ $trade->tradeStatus == 'A'? 'checked' : '' }}></td>
 
                 
                     
@@ -87,22 +89,22 @@
         "scrollX": true
       });
   } );
-  $(function() {
-    $('.changeStatus').change(function() {
-        var status = $(this).prop('checked') == true ? active : inactive; 
+
+
+  $("#example").on("click", ".changeStatus", function(){
+    var status = $(this).prop('checked') == true ? 'A' : 'D'; 
         var user_id = $(this).data('id'); 
          
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: '/changeStatusUser',
+            url: '/changeStatusTrade',
             data: {'status': status, 'user_id': user_id},
             success: function(data){
               console.log(data.success)
               toastr.info("Status changed Successfully");
             }
         });
-    })
-  })
+  });
 @endsection
 

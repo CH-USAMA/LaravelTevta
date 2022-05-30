@@ -7,6 +7,10 @@ use DB;
 use App\Models\User;
 use App\Models\SessionHistory;
 use App\Models\Centres;
+use App\Models\QualCodes;
+use App\Models\Trades;
+
+
 
 
 use Spatie\Permission\Models\Permission;
@@ -96,6 +100,16 @@ return redirect()->route('your route name')->with('info','This is xyz informatio
   
         return response()->json(['success'=>'Status changed successfully.']);
     }
+
+    public function changeStatusQual(Request $request)
+    {
+        $Qual = QualCodes::find($request->user_id);
+        $Qual->qualStatus = $request->status;
+        $Qual->save();
+  
+        return response()->json(['success'=>'Status changed successfully.']);
+    }
+    
     
     public function changeStatusRole(Request $request)
     {
@@ -105,4 +119,15 @@ return redirect()->route('your route name')->with('info','This is xyz informatio
   
         return response()->json(['success'=>'Status changed successfully.']);
     }
+
+    public function changeStatusTrade(Request $request)
+    {
+        $trade = Trades::find($request->user_id);
+        $trade->tradeStatus = $request->status;
+        $trade->save();
+  
+        return response()->json(['success'=>'Status changed successfully.']);
+    }
+
+    
 }

@@ -49,7 +49,7 @@
       <div class="col-md-6">
         <label class="form-label" for="role">User Type</label>
         <select name="role" class="form-select @error('role') is-invalid @enderror" required id="role">
-          <option selected>Choose...</option>
+          <option disabled selected>Choose...</option>
           @foreach($roles as $role)
             <option value="{{$role->name}}">{{ucfirst($role->name)}}</option>
           @endforeach

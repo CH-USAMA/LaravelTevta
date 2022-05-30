@@ -26,22 +26,23 @@
               <!-- content here -->
               <div class="body flex-grow-1 px-3">
                 <div class="container-lg">
-                <form class="row g-3" method="POST" action="{{ route('addRole')}}">
+                <form class="row g-3" method="POST" action="{{ route('closingsession')}}">
                     @csrf
                     <div class="col-md-6">
                         <label class="form-label" for="close_Session">Enter Session to close</label>
                         <input class="form-control @error('close_Session') is-invalid @enderror" id="close_Session" type="text" name="close_Session">
-                    </div>
-                    @error('close_Session')
-                        <span class="invalid-feedback" role="alert">
+                        @error('close_Session')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
+                    </div>
+                    
 
                    
                     <div class="col-12">
-                        <button class="btn btn-primary" type="submit">OK</button>
-                        <button class="btn btn-primary" type="submit">Back</button>
+                        <button class="btn btn-primary" type="submit">Close Session</button>
+                        <!-- <button class="btn btn-primary" type="submit">Back</button> -->
 
                     </div>
                     </form>

@@ -21,76 +21,98 @@
     <div class="body flex-grow-1 px-3">
         <div class="container-lg">
           <div class="card mb-4">
+          @isset($examtitle)
+          <div class="card-header">Update Exam Title</div>
+            @else
             <div class="card-header">Add Exam Title</div>
+            @endisset
             <div class="card-body">
               <!-- content here -->
               <div class="body flex-grow-1 px-3">
                 <div class="container-lg">
-                <form class="row g-3" method="POST" action="{{ route('addexamtitle')}}">
+                    @isset($examtitle)
+                    <form class="row g-3" method="POST" action="{{ route('updateexamtitle')}}">
+                    @else
+                    <form class="row g-3" method="POST" action="{{ route('saveexamtitle')}}">
+                    @endisset
+               
                     @csrf
+                    <input type="hidden" name="id" value="{{ $examtitle->id ?? '' }}">
+
                     <div class="col-md-6">
-                        <label class="form-label" for="examtitle">Exam Title</label>
-                        <input class="form-control @error('examtitle') is-invalid @enderror" id="examtitle" type="text" name="examtitle">
-                    </div>
-                    @error('examtitle')
-                        <span class="invalid-feedback" role="alert">
+                        <label class="form-label" for="titleName">Exam Title</label>
+                        <input  {{  isset($examtitle) ? 'disabled' : '' }} value="{{ $examtitle->titleName ?? '' }}" class="form-control @error('titleName') is-invalid @enderror" id="titleName" type="text" name="titleName">
+                        @error('titleName')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                    
 
                     <div class="col-md-6">
                         <label class="form-label" for="exThMks">Theory Total Marks</label>
-                        <input class="form-control @error('exThMks') is-invalid @enderror" id="exThMks" type="input" name="exThMks">
-                    </div>
-                    @error('exThMks')
-                        <span class="invalid-feedback" role="alert">
+                        <input  value="{{ $examtitle->exThMks ?? '' }}" class="form-control @error('exThMks') is-invalid @enderror" id="exThMks" type="input" name="exThMks">
+                        @error('exThMks')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                   
 
                     <div class="col-md-6">
                         <label class="form-label" for="exPrMks">Practical Total Marks</label>
-                        <input class="form-control @error('exPrMks') is-invalid @enderror" id="exPrMks" type="input" name="exPrMks">
-                    </div>
-                    @error('exPrMks')
-                        <span class="invalid-feedback" role="alert">
+                        <input value="{{ $examtitle->exPrMks ?? '' }}" class="form-control @error('exPrMks') is-invalid @enderror" id="exPrMks" type="input" name="exPrMks">
+                        @error('exPrMks')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                    
 
                     <div class="col-md-6">
                         <label class="form-label" for="exThPass">Theory Passing Marks</label>
-                        <input class="form-control @error('exThPass') is-invalid @enderror" id="exThPass" type="input" name="exThPass">
-                    </div>
-                    @error('exThPass')
-                        <span class="invalid-feedback" role="alert">
+                        <input value="{{ $examtitle->exThPass ?? '' }}" class="form-control @error('exThPass') is-invalid @enderror" id="exThPass" type="input" name="exThPass">
+                        @error('exThPass')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                   
 
                     <div class="col-md-6">
                         <label class="form-label" for="exPrPass">Practical Passing Marks</label>
-                        <input class="form-control @error('exPrPass') is-invalid @enderror" id="exPrPass" type="input" name="exPrPass">
-                    </div>
-                    @error('exPrPass')
-                        <span class="invalid-feedback" role="alert">
+                        <input  value="{{ $examtitle->exPrPass ?? '' }}" class="form-control @error('exPrPass') is-invalid @enderror" id="exPrPass" type="input" name="exPrPass">
+                        @error('exPrPass')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                         @enderror
+                    </div>
+                   
 
                     <div class="col-md-6">
-                        <label class="form-label" for="duration">Duration</label>
-                        <input class="form-control @error('duration') is-invalid @enderror" id="duration" type="input" name="duration">
-                    </div>
-                    @error('duration')
-                        <span class="invalid-feedback" role="alert">
+                        <label class="form-label" for="exDur">Duration</label>
+                        <input value="{{ $examtitle->exDur ?? '' }}" class="form-control @error('exDur') is-invalid @enderror" id="exDur" type="input" name="exDur"> 
+                        @error('exDur')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                   
     
              
                        <div class="col-12">
+                       @isset($examtitle)
+                       <button class="btn btn-primary" type="submit">Update Exam title</button>
+                        @else
                         <button class="btn btn-primary" type="submit">Add Exam title</button>
+                        @endisset
+                       
                     </div>
                     </form>
                 </div>

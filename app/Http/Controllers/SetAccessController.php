@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\SessionHistory;
-
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -106,14 +106,27 @@ class SetAccessController extends Controller
     }
     public function InstitueLevelAccessUpdate(Request $request)
     {
-        // dd($request->all());
         $request->to_date = Carbon\Carbon::parse($request->to_date)->format('y-m-d');
         $request->from_date = Carbon\Carbon::parse($request->from_date)->format('y-m-d');
+        if($request->has('to_session'))
+        {
+            $session = $request->to_session;
+            $name = 'ses'.$session;
+          if (!Schema::hasTable($name)) {
+                
+              return redirect()->back()->with('error','Invalid Session Name');
+          }
+        }
         // dd($request->all());
 
         $request->validate( [
             'from_date' =>  ['required', 'date_format:Y-m-d', 'before_or_equal:to_date','after_or_equal:' . date('Y-m-d')],
-            'to_date'  => ['required', 'date_format:Y-m-d','after_or_equal:from_date']
+            'to_date'  => ['required', 'date_format:Y-m-d','after_or_equal:from_date'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$request->id],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'string', 'max:255'],
           ]);
         $user = User::find($request->id);
         // dd($user);   
@@ -132,18 +145,41 @@ class SetAccessController extends Controller
             $user->from_date = $request->from_date;
             $user->to_date = $request->to_date;
             $user->save();
+            $request->status = isset($request->status) ? 'active' : 'inactive';
+            User::where('id',$request->id)->update(
+                [
+                    'role' => $request->role,
+                    'firstname' => $request->first_name,
+                    'lastname' => $request->last_name,
+                    'email' => $request->email,
+                    'phonenumber' => $request->phone,
+                    'status' => $request->status,
+                    'session' => $request->to_session,
+
+                ]
+            );
             // dd($user->getAllPermissions());
         }
 
-        Session::flash('message','Settings Updated Successfully!'); 
-        Session::flash('alert-class', 'alert-success'); 
-        return redirect()->back();
+        return redirect()->route('InstitueLevelAccess')->with('message','Settings Updated Successfully!');
        
     }
     public function setsessionlist()
     {
         $sessions = SessionHistory::all();
         return view('setaccess_module.setSessionList',compact('sessions'))->with('no', 1);
+    }
+    
+
+    public function setattendance()
+    {
+        return view('setaccess_module.setAutoAttendance');
+
+    }
+    
+    public function strengthSessionWise()
+    {
+        return view('setaccess_module.strengthSessionWise');
     }
     
 }

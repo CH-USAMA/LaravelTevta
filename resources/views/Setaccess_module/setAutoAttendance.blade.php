@@ -27,10 +27,10 @@
               <form class="row g-3" method="POST" action="{{ route('allpunjabAccesssave')}}">
        @csrf
        <div class="col-12">
-        <div class="form-check">
-          <input class="form-check-input" id="punjab_level_access" name="total_access" type="checkbox">
-          <label class="form-check-label" for="punjab_level_access">Punjab Level Access On/Off</label>
-        </div>
+       <div class="col-md-6">
+        <label class="form-label" for="session">Enter Session</label>
+        <input name="session" class="form-control @error('session') is-invalid @enderror" value="{{ $user->session ?? old('session') }}" required autocomplete="session" autofocus  id="session" type="input">
+      </div>
       </div>
 
         <div class="col-12">

@@ -33,23 +33,23 @@ class DataController extends Controller
 
     }
 
-    public function studentinformation()
-    {
-        return view('Data_module.studentsInformation');
+    // public function studentinformation()
+    // {
+    //     return view('Data_module.studentsInformation');
 
-    }
+    // }
 
-    public function sessionStudentList(Request $request)
-    {
-        $session = $request->session;
-        $query = "Select * from ses".$session;
-        $students = DB::select($query);
-        // dd($result);
+    // public function sessionStudentList(Request $request)
+    // {
+    //     $session = $request->session;
+    //     $query = "Select * from ses".$session;
+    //     $students = DB::select($query);
+    //     // dd($result);
 
 
-        return view('Data_module.sessionStudentList',compact('students'))->with('no', 1);
+    //     return view('Data_module.sessionStudentList',compact('students'))->with('no', 1);
 
-    }
+    // }
     
     public function homepage()
     {

@@ -23,8 +23,8 @@
           <div class="card mb-4">
           <form action="{{ route('deleteSelected')}}" method="POST" >
             @csrf
-            <input type="hidden" name="table" value="users">
-            <div class="card-header">List of Exam Titles <a href="{{ route('addexamtitle') }}" class="btn btn-secondary" style="float:right;">Add Exam Title</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Delete Selected User</button></div>
+            <input type="hidden" name="table" value="examtitle">
+            <div class="card-header">List of Exam Titles <a href="{{ route('addexamtitle') }}" class="btn btn-secondary" style="float:right;">Add Exam Title</a><button type="submit" class="btn btn-secondary" style="float:right;  margin-right: 10px;">Remove Selected Title</button><br><br></div>
 
             <div class="card-body">
 
@@ -39,7 +39,6 @@
                     <th>Theory Pass Marks</th>
                     <th>Practical Pass Marks</th>
                     <th>Duration</th>
-
                   </tr>
                 </thead>
                 <tbody>
@@ -54,10 +53,7 @@
                     <td>{{ $examtitle->exPrMks}}</td>
                     <td>{{ $examtitle->exThPass}}</td>
                     <td>{{ $examtitle->exPrPass}}</td>
-                    <td>{{ $examtitle->userID}}</td>
-                
-                    
-
+                    <td>{{ $examtitle->exDur}}</td>
                   </tr>
                   </form>
                   @endforeach

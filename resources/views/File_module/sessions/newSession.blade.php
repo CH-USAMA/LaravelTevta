@@ -21,22 +21,34 @@
     <div class="body flex-grow-1 px-3">
         <div class="container-lg">
           <div class="card mb-4">
-            <div class="card-header">Enter New Session (Like 1015A, 1115B,......)</div>
+                    @isset($session)
+                    <div class="card-header">Update Session</div>
+                    @else
+                    <div class="card-header">Enter New Session (Like 1015A, 1115B,......)</div>
+                    @endisset
             <div class="card-body">
               <!-- content here -->
               <div class="body flex-grow-1 px-3">
                 <div class="container-lg">
-                <form class="row g-3" method="POST" action="{{ route('addSession')}}">
+                @isset($session)
+                <form class="row g-3" method="POST" action="{{ route('updatesession')}}">
+                    @else
+                    <form class="row g-3" method="POST" action="{{ route('addSession')}}">
+                    @endisset
+                
                     @csrf
+                    <input type="hidden" name="id" value="{{ $session->id ?? '' }}">
+
                     <div class="col-md-6">
                         <label class="form-label" for="session_code">Enter New Session</label>
-                        <input class="form-control @error('session_code') is-invalid @enderror" id="session_code" type="text" name="session_code">
-                    </div>
-                    @error('session_code')
-                        <span class="invalid-feedback" role="alert">
+                        <input {{  isset($session) ? 'disabled' : '' }} class="form-control @error('session_code') is-invalid @enderror" id="session_code" type="text" name="session_code" value="{{ $session->s_name ?? old('session_code') }}">
+                        @error('session_code')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                         @enderror
+                    </div>
+                    
 
                     <!-- <div class="col-md-6">
                         <label class="form-label" for="age_limit">Age Limit</label>
@@ -50,23 +62,25 @@
 
                     <div class="col-md-6">
                         <label class="form-label" for="start_date">Start Date</label>
-                        <input class="form-control @error('start_date') is-invalid @enderror" id="start_date" type="date" name="start_date">
-                    </div>
-                    @error('start_date')
-                        <span class="invalid-feedback" role="alert">
+                        <input class="form-control @error('start_date') is-invalid @enderror" id="start_date" type="date" name="start_date" value="{{ isset($session) ? date('Y-m-d', strtotime($session->s_start_date))  ?? old('start_date') : ''}}">
+                        @error('start_date')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
+                    </div>
+                   
 
                     <div class="col-md-6">
                         <label class="form-label" for="end_date">End Date</label>
-                        <input class="form-control @error('end_date') is-invalid @enderror" id="end_date" type="date" name="end_date">
-                    </div>
-                    @error('end_date')
-                        <span class="invalid-feedback" role="alert">
+                        <input class="form-control @error('end_date') is-invalid @enderror" id="end_date" type="date" name="end_date"  value="{{  isset($session) ? date('Y-m-d', strtotime($session->s_end_date))  ?? old('end_date') : ''}}">
+                        @error('end_date')
+                        <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror
+                        @enderror
+                    </div>
+                    
 
                    
 
@@ -81,7 +95,12 @@
                     @enderror -->
 
                     <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Add Session</button>
+                    @isset($session)
+                    <button class="btn btn-primary" type="submit">Update Session</button>
+                    @else
+                    <button class="btn btn-primary" type="submit">Add Session</button>
+                    @endisset
+                       
                     </div>
                     </form>
                 </div>
