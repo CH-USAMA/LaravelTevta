@@ -70,7 +70,7 @@
         <h3>Trade Testing Board</h3>
       </div>
       <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
-        <li class="nav-item"><a class="nav-link" href="{{ asset('index.html') }}">
+        <li class="nav-item"><a class="nav-link" href="{{ route('homepage') }}">
             <svg class="nav-icon">
               <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}"></use>
             </svg> Homepage</a></li>

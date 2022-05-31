@@ -8,7 +8,9 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Session;
+use DB;
 
 
 class AdminController extends Controller
@@ -191,8 +193,30 @@ class AdminController extends Controller
     }
     public function controlpanel()
     {
-        return view('admin.controlpanel');
+        return view('admin.sessionControlPanel');
     }
+    public function controlPanelData(Request $request)
+    {
+      
+        if($request->has('session'))
+        {
+            $session = $request->session;
+            $name = 'ses'.$session;
+          if (!Schema::hasTable($name)) {
+                
+              return redirect()->back()->with('error','Invalid Session Name');
+          }
+        }else{
+            return redirect()->back()->with('error','Please provide a valid session name');
+        }
+        // SELECT sum(case when ses_submit = 1 then 1 else 0 end) AS submitted,sum(case when ses_submit = 0 then 1 else 0 end) AS recorded,userID FROM `ses02224a` group by userID; 
+// SELECT sum(case when ses02224a.ses_submit = 1 then 1 else 0 end) AS submitted,sum(case when ses02224a.ses_submit = 0 then 1 else 0 end) AS recorded,ses02224a.userID,users.username FROM `ses02224a` INNER JOIN users ON ses02224a.userID = users.id group by ses02224a.userID,users.username;
+        $query = " SELECT sum(case when ses".$session.".ses_submit = 1 then 1 else 0 end) AS submitted,sum(case when ses".$session.".ses_submit = 0 then 1 else 0 end) AS recorded,ses".$session.".userID,users.username as name FROM  ses".$session." INNER JOIN users ON  ses".$session.".userID = users.id group by  ses".$session.".userID,users.username";
+        $records = DB::select($query);                     
+        // dd($records);
+        return view('admin.controlpanel',compact('records'));
+    }
+    
     public function changePassword()
     {
         return view('admin.changePassword');

@@ -80,6 +80,8 @@ class FileController extends Controller
         $enddate = $request->end_date;
         $request->validate( [
            'session_code' => ['required'],
+           'age_limit' => ['required'],
+           'exam_title' => ['required'],
            'start_date' =>  ['required', 'date_format:Y-m-d', 'before_or_equal:end_date','after_or_equal:' . date('Y-m-d')],
            'end_date'  => ['required', 'date_format:Y-m-d','after_or_equal:start_date']
          ]);
@@ -95,56 +97,58 @@ class FileController extends Controller
         }
 
         // dd($request->all());
-        DB::statement("CREATE TABLE ses".$mon." (
-            id INT(4) NOT NULL AUTO_INCREMENT,
-            ses_name VARCHAR(50) DEFAULT NULL,
-            ses_serial_no VARCHAR(40) DEFAULT NULL,
-            ses_cnic_no VARCHAR(150) DEFAULT NULL,
-            ses_roll_no VARCHAR(150) DEFAULT NULL,
-            ses_dur VARCHAR(2) DEFAULT NULL,
-            ses_reg_no VARCHAR(180) DEFAULT NULL,
-            ses_sex VARCHAR(10) DEFAULT NULL,
-            ses_group VARCHAR(10) DEFAULT NULL,
-            ses_st_name VARCHAR(195) DEFAULT NULL,
-            ses_f_name VARCHAR(195) DEFAULT NULL,
-            ses_pic_name VARCHAR(180)DEFAULT NULL,
-            ses_pic LONGBLOB DEFAULT NULL,
-            ses_cnt_code VARCHAR(40) DEFAULT NULL,
-            ses_trade_code VARCHAR(30) DEFAULT NULL,
-            ses_trade_name VARCHAR(150) DEFAULT NULL,
-            ses_qual_code VARCHAR(20) DEFAULT NULL,
-            ses_st_doa DATE DEFAULT NULL,
-            ses_st_dob DATE DEFAULT NULL,
-            ses_alow_reg VARCHAR(10) DEFAULT NULL,
-            ses_att_per int(3) DEFAULT NULL,
-            ses_att_th VARCHAR(100) DEFAULT NULL,
-            ses_att_pr VARCHAR(100) DEFAULT NULL,
-            ses_mks_th INT(30) DEFAULT NULL,
-            ses_mks_pr INT(30) DEFAULT NULL,
-            ses_th_pass INT(30) DEFAULT NULL,
-            ses_pr_pass INT(30) DEFAULT NULL,
-            ses_th_obt INT(30) DEFAULT NULL,
-            ses_pr_obt INT(30) DEFAULT NULL,
-            ses_mks_agr INT(30) DEFAULT NULL,
-            ses_result VARCHAR(120) DEFAULT NULL,
-            ses_remarks VARCHAR(120) DEFAULT NULL,
-            ses_chance INT(1) DEFAULT NULL,
-            ses_anl_sup VARCHAR(100) DEFAULT NULL,
-            ses_status VARCHAR(100) DEFAULT NULL,
-            userID VARCHAR(50) DEFAULT NULL,
-            ses_examTitle VARCHAR(90) DEFAULT NULL,
-            ses_submit INT(10) DEFAULT NULL,
-            ses_etid CHAR(1) DEFAULT NULL,
-            PRIMARY KEY (`id`,`ses_reg_no`)
-            ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
+        // DB::statement("CREATE TABLE ses".$mon." (
+        //     id INT(4) NOT NULL AUTO_INCREMENT,
+        //     ses_name VARCHAR(50) DEFAULT NULL,
+        //     ses_serial_no VARCHAR(40) DEFAULT NULL,
+        //     ses_cnic_no VARCHAR(150) DEFAULT NULL,
+        //     ses_roll_no VARCHAR(150) DEFAULT NULL,
+        //     ses_dur VARCHAR(2) DEFAULT NULL,
+        //     ses_reg_no VARCHAR(180) DEFAULT NULL,
+        //     ses_sex VARCHAR(10) DEFAULT NULL,
+        //     ses_group VARCHAR(10) DEFAULT NULL,
+        //     ses_st_name VARCHAR(195) DEFAULT NULL,
+        //     ses_f_name VARCHAR(195) DEFAULT NULL,
+        //     ses_pic_name VARCHAR(180)DEFAULT NULL,
+        //     ses_pic LONGBLOB DEFAULT NULL,
+        //     ses_cnt_code VARCHAR(40) DEFAULT NULL,
+        //     ses_trade_code VARCHAR(30) DEFAULT NULL,
+        //     ses_trade_name VARCHAR(150) DEFAULT NULL,
+        //     ses_qual_code VARCHAR(20) DEFAULT NULL,
+        //     ses_st_doa DATE DEFAULT NULL,
+        //     ses_st_dob DATE DEFAULT NULL,
+        //     ses_alow_reg VARCHAR(10) DEFAULT NULL,
+        //     ses_att_per int(3) DEFAULT NULL,
+        //     ses_att_th VARCHAR(100) DEFAULT NULL,
+        //     ses_att_pr VARCHAR(100) DEFAULT NULL,
+        //     ses_mks_th INT(30) DEFAULT NULL,
+        //     ses_mks_pr INT(30) DEFAULT NULL,
+        //     ses_th_pass INT(30) DEFAULT NULL,
+        //     ses_pr_pass INT(30) DEFAULT NULL,
+        //     ses_th_obt INT(30) DEFAULT NULL,
+        //     ses_pr_obt INT(30) DEFAULT NULL,
+        //     ses_mks_agr INT(30) DEFAULT NULL,
+        //     ses_result VARCHAR(120) DEFAULT NULL,
+        //     ses_remarks VARCHAR(120) DEFAULT NULL,
+        //     ses_chance INT(1) DEFAULT NULL,
+        //     ses_anl_sup VARCHAR(100) DEFAULT NULL,
+        //     ses_status VARCHAR(100) DEFAULT NULL,
+        //     userID VARCHAR(50) DEFAULT NULL,
+        //     ses_examTitle VARCHAR(90) DEFAULT NULL,
+        //     ses_submit INT(10) DEFAULT NULL,
+        //     ses_etid CHAR(1) DEFAULT NULL,
+        //     PRIMARY KEY (`id`,`ses_reg_no`)
+        //     ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1");
 
 
             $userid = Auth::user()->username;
             // $startdate = $request->from_date;
             // $enddate = $request->to_date;
 
-           
-            DB::statement("INSERT INTO seshis (s_name,s_start_date,s_end_date,s_status,userID) VALUES('$mon','$startdate','$enddate','1','$userid')");
+           $age_limit = $request->age_limit;
+           $exam_title = $request->exam_title;
+
+            DB::statement("INSERT INTO seshis (s_name,s_start_date,s_end_date,s_status,userID,agelimit,examtitle) VALUES('$mon','$startdate','$enddate','1','$userid','$age_limit','$exam_title')");
             return redirect()->route('sessionlist')->with('message','Session is created');
 
             
@@ -171,8 +175,10 @@ class FileController extends Controller
         $enddate = $request->end_date;
 
         $request->validate( [
-           'start_date' =>  ['required', 'date_format:Y-m-d', 'before_or_equal:end_date','after_or_equal:' . date('Y-m-d')],
-           'end_date'  => ['required', 'date_format:Y-m-d','after_or_equal:start_date']
+           'start_date' =>  ['required', 'date_format:Y-m-d', 'before_or_equal:end_date'],
+           'end_date'  => ['required', 'date_format:Y-m-d','after_or_equal:start_date'],
+           'age_limit' => ['required'],
+           'exam_title' => ['required'],
          ]);
 
         $request->to_date = Carbon\Carbon::parse($request->start_date)->format('y-m-d');
@@ -183,6 +189,8 @@ class FileController extends Controller
         SessionHistory::where('id',$request->id)->update([
             's_start_date'  => $request->start_date,
             's_end_date'  => $request->end_date,
+            'agelimit'  => $request->age_limit,
+            'examtitle'  => $request->exam_title,
             'UserID'      => $userid,
         ]);
        
@@ -213,9 +221,14 @@ class FileController extends Controller
                 {
                     // $getSession->s_close_date = date('Y-m-d');
                     // $getSession->save();
-
+                    $userid = Auth::user()->username;
                     $yr = SUBSTR($session,2,2);
-                    $this->getStudentCl($session, $yr);
+                    $dte = date('Y-m-d');
+                    $hisup = "UPDATE seshis SET s_status = '0', s_close_date = '$dte', userID = '$userid' WHERE s_name = '$session'";
+                    // dd($hisup);
+                    $rec = DB::statement($hisup);
+
+                    // $this->getStudentCl($session, $yr);
 
                     return redirect()->route('closeSession')->with('message','Session is Closed');
 

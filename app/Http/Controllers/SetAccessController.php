@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\StrengthSession;
 use App\Models\SessionHistory;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
@@ -146,6 +147,7 @@ class SetAccessController extends Controller
             $user->to_date = $request->to_date;
             $user->save();
             $request->status = isset($request->status) ? 'active' : 'inactive';
+
             User::where('id',$request->id)->update(
                 [
                     'role' => $request->role,
@@ -177,9 +179,53 @@ class SetAccessController extends Controller
 
     }
     
+    
+    
     public function strengthSessionWise()
     {
         return view('setaccess_module.strengthSessionWise');
+    }
+
+    public function strengthSessionWiseUpdate(Request $request)
+    {
+        if($request->has('session'))
+        {
+            $session = $request->session;
+            $name = 'ses'.$session;
+          if (!Schema::hasTable($name)) {
+                
+              return redirect()->back()->with('error','Invalid Session Name');
+          }
+        }else{
+            return redirect()->back()->with('error','Invalid Session Name');
+        }
+        
+        $strengthSession = StrengthSession::where('session_name', $request->session)->first();
+        // dd($strengthSession->id);
+        if(!empty($strengthSession->id))
+        {
+
+            StrengthSession::where('id',$strengthSession->id)->update(
+                [
+                    'strength' => empty($request->session_strength) ? 0 : $request->session_strength
+                ]
+            );
+            return redirect()->route('strengthSessionWise')->with('message','Strength Updated Successfully!');
+
+        }else{
+
+
+            StrengthSession::create(
+                [
+                    'session_name' => $request->session,
+                    'strength' => empty($request->session_strength) ? 0 : $request->session_strength
+                ]
+            );
+            return redirect()->route('strengthSessionWise')->with('message','Strength Added Successfully!');
+
+        }
+
+       
     }
     
 }

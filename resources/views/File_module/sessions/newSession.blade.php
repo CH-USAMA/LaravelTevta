@@ -13,7 +13,9 @@
   </nav>
 </div>
 </header>
-
+@php
+$ExamTitles = App\Models\ExamTitle::get();
+@endphp
 
 <div class="body flex-grow-1 px-3">
   <div class="container-lg">
@@ -50,15 +52,16 @@
                     </div>
                     
 
-                    <!-- <div class="col-md-6">
+                   <div class="col-md-6">
                         <label class="form-label" for="age_limit">Age Limit</label>
-                        <input class="form-control @error('age_limit') is-invalid @enderror" id="age_limit" type="input" name="age_limit">
-                    </div>
-                    @error('age_limit')
+                        <input class="form-control @error('age_limit') is-invalid @enderror" id="age_limit" type="input" name="age_limit" value="{{ $session->agelimit ?? old('age_limit') }}">
+                        @error('age_limit')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror -->
+                    @enderror 
+                    </div>
+                  
 
                     <div class="col-md-6">
                         <label class="form-label" for="start_date">Start Date</label>
@@ -84,15 +87,22 @@
 
                    
 
-                    <!-- <div class="col-md-6">
+                    <div class="col-md-6">
                         <label class="form-label" for="exam_title">Exam Title</label>
-                        <input class="form-control @error('exam_title') is-invalid @enderror" id="exam_title" type="input" name="exam_title">
-                    </div>
-                    @error('exam_title')
+                        <select name="exam_title" class="form-select @error('exam_title') is-invalid @enderror" required id="exam_title">
+                          <option disabled selected>Choose...</option>
+                          @foreach($ExamTitles as $ExamTitle)
+                          
+                          <option  {{ (isset($session) && $session->examtitle == $ExamTitle->titleName) ? 'selected' : '' }} value="{{$ExamTitle->titleName}}">{{$ExamTitle->titleName}}</option>
+                          @endforeach
+                        </select>
+                        @error('exam_title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror -->
+                    @enderror 
+                    </div>
+                   
 
                     <div class="col-12">
                     @isset($session)

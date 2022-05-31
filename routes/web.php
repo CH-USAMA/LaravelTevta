@@ -42,6 +42,8 @@ Route::get('/initializePassword', [App\Http\Controllers\AdminController::class, 
 Route::post('/initializePassword', [App\Http\Controllers\AdminController::class, 'initializePasswordSave'])->name('initializePasswordSave');
 Route::get('/changePassword', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('changePassword');
 Route::get('/controlpanel', [App\Http\Controllers\AdminController::class, 'controlpanel'])->name('controlpanel');
+Route::post('/controlPanelData', [App\Http\Controllers\AdminController::class, 'controlPanelData'])->name('controlPanelData');
+
 
 
 
@@ -111,6 +113,9 @@ Route::post('/InstitueLevelAccessUpdate', [App\Http\Controllers\SetAccessControl
 
 Route::get('/setattendance', [App\Http\Controllers\SetAccessController::class, 'setattendance'])->name('setattendance');
 Route::get('/strengthSessionWise', [App\Http\Controllers\SetAccessController::class, 'strengthSessionWise'])->name('strengthSessionWise');
+Route::post('/strengthSessionWise', [App\Http\Controllers\SetAccessController::class, 'strengthSessionWiseUpdate'])->name('strengthSessionWiseUpdate');
+
+
 
 // Route::view('/sessionAccess', 'setaccess_module.setSessionLevelAccess')->name('sessionAccess');
 // Route::view('/strengthSessionWise', 'setaccess_module.strengthSessionWise')->name('strengthSessionWise');

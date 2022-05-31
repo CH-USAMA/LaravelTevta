@@ -158,7 +158,7 @@
     <div class="row">
     <div class="col-md-6">
         <label class="form-label" for="to_session">To Session</label>
-        <input name="to_session" class="form-control @error('to_session') is-invalid @enderror" value="{{ $user->to_session ?? old('to_session') }}"  autocomplete="to_session"   id="to_session" type="text">
+        <input name="to_session" class="form-control @error('to_session') is-invalid @enderror" value="{{ $user->session ?? old('to_session') }}"  autocomplete="to_session"   id="to_session" type="text">
         @error('to_session')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>

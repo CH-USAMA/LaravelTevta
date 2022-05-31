@@ -50,17 +50,9 @@
                     <td>{{ $session->s_name}}</td>
                     <td>{{ $session->s_start_date}}</td>
                     <td>{{ $session->s_end_date}}</td>
-                    <td><a href="#">SET ACCESS</a></td>
-
-
-                   
-
+                    <td><a href="{{ route('editSession',['id' => Crypt::encrypt($session->id)])}}">SET ACCESS</a></td>
                     <td> <input data-id="{{$session->id}}" class="changeStatus" type="checkbox" data-onstyle="success" data-offstyle="danger"
                      data-toggle="toggle" data-on="Active" data-off="InActive" {{ $session->s_status == 1 ? 'checked' : '' }}></td>
-
-                
-                    
-
                   </tr>
                   </form>
                   @endforeach

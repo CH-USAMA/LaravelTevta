@@ -24,18 +24,28 @@
             <div class="card-header">Enter Strength Session Wise</div>
             <div class="card-body">
               <!-- content here -->
-    <form class="row g-3" method="POST" action="">
+    <form class="row g-3" method="POST" action="{{route('strengthSessionWiseUpdate')}}">
        @csrf
        
     <div class="row">
     <div class="col-md-6">
         <label class="form-label" for="session">Enter Session</label>
         <input name="session" class="form-control @error('session') is-invalid @enderror" value="{{ $user->session ?? old('session') }}" required autocomplete="session" autofocus  id="session" type="input">
+        @error('session')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
       </div>
 
     <div class="col-md-6">
-        <label class="form-label" for="session">Select Limit (A for All or 1-59)</label>
-        <input name="session" class="form-control @error('session') is-invalid @enderror" value="{{ $user->session ?? old('session') }}" required autocomplete="session" autofocus  id="session" type="input">
+        <label class="form-label" for="session_strength">Select Limit (A for All or 1-59)</label>
+        <input name="session_strength" class="form-control @error('session_strength') is-invalid @enderror" value="{{ $user->session_strength ?? old('session_strength') }}" required autocomplete="session_strength"   id="session_strength" type="input">
+        @error('session_strength')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
       </div>
        
         
